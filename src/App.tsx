@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
+import {useRecoilState, useResetRecoilState} from 'recoil';
+import {envState} from './state';
 import './App.css';
+import PageRouter from './route';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [envInfo, setEnvInfo] = useRecoilState(envState);
+    // reset api
+    const resetEnvInfo = useResetRecoilState(envState);
+    console.log('envInfo : ', envInfo, setEnvInfo, resetEnvInfo);
+    return (
+        <div className="app">
+            <main>
+                <PageRouter />
+            </main>
+        </div>
+    );
 }
 
 export default App;
