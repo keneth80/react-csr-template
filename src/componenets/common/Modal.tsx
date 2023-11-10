@@ -67,9 +67,9 @@ function Modal({
         <div>
             <ModalOverlay $visibled={$visibled} />
             <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex="-1" $visibled={$visibled}>
-                <ModalInner tabIndex="0" className="modal-inner">
-                    <ModalInner2>
-                        <ImgStyle>
+                <ModalContentContainer tabIndex="0" className="modal-inner">
+                    <ModalContent>
+                        <ImgContainer>
                             <a href="https://www.pping.kr" rel="noopener noreferrer" target={'_blank'}>
                                 <img
                                     src="https://www.vcgamers.com/news/wp-content/uploads/2023/05/Spoiler-One-Piece-Chapter-1083.png"
@@ -77,38 +77,38 @@ function Modal({
                                     alt=""
                                 />
                             </a>
-                        </ImgStyle>
+                        </ImgContainer>
                         {closable && (
-                            <CloseStyle>
+                            <CloseContainer>
                                 <Close className="modal-close" onClick={Dayclose}>
                                     오늘 하루 닫기
                                 </Close>
                                 <Close className="modal-close" onClick={close}>
                                     닫기
                                 </Close>
-                            </CloseStyle>
+                            </CloseContainer>
                         )}
-                    </ModalInner2>
-                </ModalInner>
+                    </ModalContent>
+                </ModalContentContainer>
             </ModalWrapper>
         </div>
     );
 }
 
-const ModalInner2 = styled.div`
+const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
 
-const ImgStyle = styled.div`
+const ImgContainer = styled.div`
     width: 480px;
     height: 100%;
     position: relative;
     display: flex;
 `;
 
-const CloseStyle: any = styled.div`
+const CloseContainer: any = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: #282828;
@@ -147,7 +147,7 @@ const ModalOverlay: any = styled.div`
     z-index: 999;
 `;
 
-const ModalInner: any = styled.div`
+const ModalContentContainer: any = styled.div`
     box-sizing: border-box;
     position: relative;
     max-width: 480px;
