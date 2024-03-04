@@ -1,13 +1,14 @@
-import {useRecoilState, useResetRecoilState} from 'recoil';
-import {envState} from './state';
+import {useRecoilState, useRecoilValueLoadable} from 'recoil';
+import {envState, tempUsersSelector} from './state';
 import './App.css';
 import PageRouter from './route';
 
 function App() {
     const [envInfo, setEnvInfo] = useRecoilState(envState);
-    // reset api
-    const resetEnvInfo = useResetRecoilState(envState);
-    console.log('envInfo : ', envInfo, setEnvInfo, resetEnvInfo);
+
+    const tempUserLoaderble = useRecoilValueLoadable(tempUsersSelector);
+
+    console.log('envInfo : ', setEnvInfo, envInfo, tempUserLoaderble.state, tempUserLoaderble.contents);
     return (
         <div className="app">
             <main>

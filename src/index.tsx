@@ -6,12 +6,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+/**
+ * recoil 비동기 통신을 위해서는 Recoil root 내부에 suspense 가 선언되어 있어야한다.
+ * 없을 시 warning 이 뜸.
+ */
 root.render(
     <RecoilRoot>
         <React.StrictMode>
             <BrowserRouter>
-                <App />
+                <React.Suspense fallback={<div>Loading...</div>}>
+                    <App />
+                </React.Suspense>
             </BrowserRouter>
         </React.StrictMode>
     </RecoilRoot>

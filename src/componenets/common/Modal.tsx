@@ -42,7 +42,7 @@ function Modal({
                 onClose(false);
             }
         }
-    }, [VISITED_BEFORE_DATE]);
+    }, [VISITED_BEFORE_DATE, VISITED_NOW_DATE, onClose]);
 
     // 하루동안 팝업 닫기
     const Dayclose = (e: any) => {
@@ -72,7 +72,7 @@ function Modal({
                         <ImgContainer>
                             <a href="https://www.pping.kr" rel="noopener noreferrer" target={'_blank'}>
                                 <img
-                                    src="https://www.vcgamers.com/news/wp-content/uploads/2023/05/Spoiler-One-Piece-Chapter-1083.png"
+                                    src="./img/KakaoTalk_20230119_083235223_012.jpg"
                                     style={{width: '100%', height: '100%', borderRadius: '15px 15px 0 0'}}
                                     alt=""
                                 />
@@ -112,7 +112,7 @@ const CloseContainer: any = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: #282828;
-    width: 452px;
+    width: 480px;
     padding: 15px;
     border-radius: 0 0 15px 15px;
     color: #ffffff;
@@ -130,7 +130,7 @@ const ModalWrapper: any = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 1300;
     overflow: auto;
     outline: 0;
 `;
@@ -144,7 +144,7 @@ const ModalOverlay: any = styled.div`
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 999;
+    z-index: 1299;
 `;
 
 const ModalContentContainer: any = styled.div`

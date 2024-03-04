@@ -23,14 +23,6 @@
     color: white;
 }
 
-.route-container {
-    width: 100%;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
-}
-
 .app-link {
     color: #61dafb;
 }
@@ -42,4 +34,12 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+.route-container {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
 }
