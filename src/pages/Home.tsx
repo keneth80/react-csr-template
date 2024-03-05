@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -23,18 +23,25 @@ export default function Home() {
     const [open, setOpenDialog] = useState(false);
     const [selectedValue, setSelectedValue] = useState(emails[1]);
 
-    const handleClickOpen = () => {
+    const handleClickOpen = useCallback(() => {
         setOpenDialog(true);
-    };
+    }, [setOpenDialog]);
 
-    const handleClose = (value: string) => {
-        setOpenDialog(false);
-    };
+    const handleClose = useCallback(
+        (value: string) => {
+            setSelectedValue(value);
+            setOpenDialog(false);
+        },
+        [setSelectedValue, setOpenDialog]
+    );
 
-    const handleListItemClick = (value: string) => {
-        setSelectedValue(value);
-        setOpenDialog(false);
-    };
+    const handleListItemClick = useCallback(
+        (value: string) => {
+            setSelectedValue(value);
+            setOpenDialog(false);
+        },
+        [setSelectedValue, setOpenDialog]
+    );
 
     return (
         <Container maxWidth="xl" sx={{pt: 4, pb: 4, pr: 4, pl: 4, width: '100%'}}>
@@ -52,7 +59,10 @@ export default function Home() {
                         <div>
                             <h1>Home</h1>
                             <p>Home 페이지입니다.</p>
-                            <Button onClick={openModal}>show Modal</Button>
+                            <Button variant="contained" onClick={openModal}>
+                                show Modal
+                            </Button>
+                            <br />
                             <br />
                             <Typography variant="subtitle1" component="div">
                                 Selected: {selectedValue}

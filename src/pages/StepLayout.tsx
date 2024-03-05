@@ -9,24 +9,10 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import AddressForm from './step/AddressForm';
 import PaymentForm from './step/PaymentForm';
 import Review from './step/Review';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -110,7 +96,6 @@ export default function StepLayout() {
                         </React.Fragment>
                     )}
                 </Paper>
-                <Copyright />
             </Container>
         </React.Fragment>
     );

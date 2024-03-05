@@ -21,6 +21,7 @@ const About = lazy(
 const SignIn = lazy(() => import('../pages/SignIn'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 const NotFound = lazy(() => import('../pages/NotFound'));
+const StepLayout = lazy(() => import('../pages/StepLayout'));
 
 const routeList: Array<RouteItem> = [
     {
@@ -40,6 +41,12 @@ const routeList: Array<RouteItem> = [
         path: '/dashboard',
         fallback: <>Dashboard Loading...</>,
         element: <Dashboard />
+    },
+    {
+        id: 4,
+        path: '/step',
+        fallback: <>Step Layout Loading...</>,
+        element: <StepLayout />
     }
 ];
 
