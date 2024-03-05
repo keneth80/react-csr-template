@@ -15,8 +15,6 @@ export function useInputDataCheck<T = any>(initialFormData: T): [T, (e: any) => 
     return [form, onChange, onReset];
 }
 
-export function usePopup() {}
-
 export function useToggleModal() {
     const [{isVisivle}, setModalVisible] = useRecoilState(modalVisibleState);
 

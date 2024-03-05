@@ -20,6 +20,7 @@ const About = lazy(
 );
 const SignIn = lazy(() => import('../pages/SignIn'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 
 const routeList: Array<RouteItem> = [
     {
@@ -35,12 +36,6 @@ const routeList: Array<RouteItem> = [
         element: <About />
     },
     {
-        id: 3,
-        path: '*',
-        fallback: <>Home Loading...</>,
-        element: <Home />
-    },
-    {
         id: 4,
         path: '/dashboard',
         fallback: <>Dashboard Loading...</>,
@@ -54,6 +49,12 @@ const emptyRouteList: Array<RouteItem> = [
         path: '/login',
         fallback: <>Loading...</>,
         element: <SignIn />
+    },
+    {
+        id: 3,
+        path: '*',
+        fallback: <>Loading...</>,
+        element: <NotFound />
     }
 ];
 
