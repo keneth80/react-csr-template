@@ -1,6 +1,6 @@
 import {InternalAxiosRequestConfig} from 'axios';
 
-export interface GDRGatewayRequest<T> {
+export interface GatewayRequest<T> {
     url: string;
     param: T;
 }
