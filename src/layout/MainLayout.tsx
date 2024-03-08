@@ -19,6 +19,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import {mainListItems, secondaryListItems} from './listItems';
 import {modalVisibleState} from '../state';
 import Modal from '../componenets/common/Modal';
+import {useRouteName} from '../hooks';
+import {RouteItem} from '../route';
 
 function Copyright(props: any) {
     return (
@@ -85,6 +87,8 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
 const defaultTheme = createTheme();
 
 function MainLayout() {
+    const location: RouteItem | undefined = useRouteName();
+    console.log('location : ', location);
     const [open, setOpen] = useState(true);
 
     const toggleDrawer = () => {
@@ -122,7 +126,7 @@ function MainLayout() {
                             <MenuIcon />
                         </IconButton>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{flexGrow: 1}}>
-                            Dashboard
+                            {location ? location.routeName : ''}
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">

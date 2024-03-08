@@ -3,12 +3,13 @@ import {Route, Routes} from 'react-router-dom';
 import MainLayout from '../layout/MainLayout';
 import EmptyLayout from '../layout/EmpltyLayout';
 
-interface RouteItem {
+export interface RouteItem {
     id: number;
     path?: string;
     isIndex?: boolean;
     fallback: any;
     element: any;
+    routeName?: string;
 }
 
 const Home = lazy(() => import('../pages/Home'));
@@ -23,27 +24,31 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 const StepLayout = lazy(() => import('../pages/StepLayout'));
 
-const routeList: Array<RouteItem> = [
+export const routeList: Array<RouteItem> = [
     {
         id: 0,
+        routeName: 'Home',
         isIndex: true,
         fallback: <>Home Loading...</>,
         element: <Home />
     },
     {
         id: 1,
+        routeName: 'About',
         path: '/about',
         fallback: <>About Loading...</>,
         element: <About />
     },
     {
         id: 4,
+        routeName: 'Dashboard',
         path: '/dashboard',
         fallback: <>Dashboard Loading...</>,
         element: <Dashboard />
     },
     {
         id: 4,
+        routeName: 'Step Example',
         path: '/step',
         fallback: <>Step Layout Loading...</>,
         element: <StepLayout />

@@ -57,7 +57,9 @@
             "last 1 safari version"
         ]
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "cra-bundle-analyzer": "^0.1.1"
+    },
     "peerDependencies": {
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
