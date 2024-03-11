@@ -5,8 +5,7 @@ import {onError} from './common/error';
 export function apiInstanceInitialize(configuration?: any, executeCallbacks?: () => void) {
     makeAxios(configuration);
     setRequestInterceptorByHeaderToken('toekn');
-    setResponseInterceptor(onResponse);
-    setResponseInterceptor(onError);
+    setResponseInterceptor(onResponse, onError);
     if (executeCallbacks) executeCallbacks();
 }
 

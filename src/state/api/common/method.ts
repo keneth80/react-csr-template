@@ -1,17 +1,17 @@
-import {AxiosResponse, AxiosRequestConfig} from 'axios';
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {AxiosSingleInstance} from '../common/http';
 import {GatewayResponse} from './response';
 
 function httpMethodWrapper<T = any, P = any>(
     url: string,
     param: P,
-    httpCallback: (url: string, param?: P | AxiosRequestConfig) => Promise<GatewayResponse<T>>
+    httpMethod: (url: string, param: P | AxiosRequestConfig) => Promise<AxiosResponse<T>>
 ) {
     return new Promise<GatewayResponse<T>>((resolve) => {
         try {
-            httpCallback(url, param)
-                .then((response: GatewayResponse<T>) => {
-                    resolve(response);
+            httpMethod(url, param)
+                .then((response: AxiosResponse) => {
+                    resolve(response.data);
                 })
                 .catch((error) => {
                     resolve({
@@ -30,8 +30,8 @@ function httpMethodWrapper<T = any, P = any>(
     });
 }
 
-export function get<T = any>(url: string, config: AxiosRequestConfig): Promise<GatewayResponse<T>> {
-    return httpMethodWrapper<T, AxiosRequestConfig>(url, config, AxiosSingleInstance.getInstance().get);
+export function get<T = any>(url: string, config?: AxiosRequestConfig): Promise<GatewayResponse<T>> {
+    return httpMethodWrapper<T, AxiosRequestConfig>(url, config ? config : {}, AxiosSingleInstance.getInstance().get);
 }
 
 export function post<T = any, P = any>(url: string, param: P): Promise<GatewayResponse<T>> {
@@ -42,6 +42,6 @@ export function put<T = any, P = any>(url: string, param: P): Promise<GatewayRes
     return httpMethodWrapper<T, P>(url, param, AxiosSingleInstance.getInstance().put);
 }
 
-export function deleted<T = any>(url: string, config: AxiosRequestConfig): Promise<GatewayResponse<T>> {
-    return httpMethodWrapper<T, AxiosRequestConfig>(url, config, AxiosSingleInstance.getInstance().delete);
+export function deleted<T = any>(url: string, config?: AxiosRequestConfig): Promise<GatewayResponse<T>> {
+    return httpMethodWrapper<T, AxiosRequestConfig>(url, config ? config : {}, AxiosSingleInstance.getInstance().delete);
 }

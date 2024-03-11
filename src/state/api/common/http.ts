@@ -64,16 +64,16 @@ export const removeTokenInterceptor = (config: AxiosRequestConfig) => {
     return config;
 };
 
-export function setRequestInterceptor(interceptor: any): number {
-    return AxiosSingleInstance.getInstance().interceptors.request.use(interceptor);
+export function setRequestInterceptor(interceptor: any, onErrorInterceptor?: any): number {
+    return AxiosSingleInstance.getInstance().interceptors.request.use(interceptor, onErrorInterceptor);
 }
 
 export function removeRequestInterceptor(interceptorId: number): void {
     AxiosSingleInstance.getInstance().interceptors.request.eject(interceptorId);
 }
 
-export function setResponseInterceptor(interceptor: any): number {
-    return AxiosSingleInstance.getInstance().interceptors.response.use(interceptor);
+export function setResponseInterceptor(interceptor: any, onErrorInterceptor?: any): number {
+    return AxiosSingleInstance.getInstance().interceptors.response.use(interceptor, onErrorInterceptor);
 }
 
 export function setReponseErrorInterceptor(interceptor: any): number {

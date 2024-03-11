@@ -9,10 +9,10 @@ import Paper from '@mui/material/Paper';
 export default function About() {
     const [user, setUser] = useState<any>(null);
     // temp user
-    const userObj = useRecoilValue(tempUser('2'));
+    const userObj = useRecoilValue(tempUser(2));
 
     // 캐싱처리되는 데이터를 다시 받아오기 위함.
-    const refresh = useRecoilRefresher_UNSTABLE(tempUser('2'));
+    const refresh = useRecoilRefresher_UNSTABLE(tempUser(2));
 
     useEffect(() => {
         if (!user) {

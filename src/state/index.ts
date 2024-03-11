@@ -1,5 +1,6 @@
 import {atom, selector, selectorFamily} from 'recoil';
 import axios from 'axios';
+import {getJsonUserById} from '../state/api/endpoint/json-users';
 
 export const envState = atom({
     key: 'envState',
@@ -28,16 +29,11 @@ export const modalVisibleState = atom({
 
 export const tempUser = selectorFamily({
     key: 'jsonuser/get',
-    get: (userId: string) => async () => {
+    get: (userId: number) => async () => {
         if (!userId) return '';
 
-        const {data} = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
-        return data;
-    },
-    set: (params) => {
-        return ({set}, user) => {
-            set(tempUserState, user);
-        };
+        const {body} = await getJsonUserById({userId});
+        return body;
     }
 });
 
