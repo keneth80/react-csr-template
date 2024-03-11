@@ -9,7 +9,8 @@ export interface GatewayResponse<T> {
 export const onResponse = (res: AxiosResponse): AxiosResponse => {
     const {method, url} = res.config;
     const {statusCode, resultCode, body} = res.data;
-    if (statusCode === 200 && resultCode === 1) {
+
+    if (statusCode === 200 && (resultCode === 1 || resultCode === 0)) {
         console.log(`[API RESPONSE]: ${method?.toUpperCase()} ${url} | ${resultCode} : ${body}`);
     } else {
         console.log(`[API ERROR]: ${method?.toUpperCase()} ${url} | ${resultCode} : ${body}`);

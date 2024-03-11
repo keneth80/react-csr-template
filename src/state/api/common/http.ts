@@ -1,4 +1,5 @@
-import Axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import Axios, {AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults} from 'axios';
+import {GO_LOGIN_ERROR_EVENT, GO_SERVER_ERROR_EVENT} from './error';
 
 /**
  * @title makeAxios
@@ -15,7 +16,7 @@ export function makeAxios(configuration?: {baseURL: string; [key: string]: any})
         Object.assign(axiosConfig, configuration);
     }
 
-    const axios: AxiosInstance = Axios.create(axiosConfig);
+    const axios: AxiosInstance = AxiosSingleInstance.getInstance(axiosConfig);
 
     axios.interceptors.response.use(
         function (response) {
@@ -25,7 +26,10 @@ export function makeAxios(configuration?: {baseURL: string; [key: string]: any})
             if (error.response && error.response.status) {
                 switch (error.response.status) {
                     case 401:
-                        dispatchEvent(new Event('go_login_event'));
+                        dispatchEvent(new Event(GO_LOGIN_ERROR_EVENT));
+                        return new Promise(() => {});
+                    case 500:
+                        dispatchEvent(new Event(GO_SERVER_ERROR_EVENT));
                         return new Promise(() => {});
                     default:
                         return Promise.reject(error);
@@ -40,9 +44,9 @@ export function makeAxios(configuration?: {baseURL: string; [key: string]: any})
 
 export class AxiosSingleInstance {
     private static INSTANCE: AxiosInstance;
-    public static getInstance(): AxiosInstance {
+    public static getInstance(axiosConfig?: CreateAxiosDefaults): AxiosInstance {
         if (!AxiosSingleInstance.INSTANCE) {
-            AxiosSingleInstance.INSTANCE = Axios.create();
+            AxiosSingleInstance.INSTANCE = Axios.create(axiosConfig);
         }
         return AxiosSingleInstance.INSTANCE;
     }
