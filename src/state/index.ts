@@ -1,24 +1,25 @@
 import {atom, selector, selectorFamily} from 'recoil';
+import {v1} from 'uuid';
 import axios from 'axios';
-import {getJsonUserById} from '../state/api/endpoint/json-users';
+import {getJsonUserById, getJsonUserList} from './api/endpoint/jsonusers';
 
 export const envState = atom({
-    key: 'envState',
+    key: `envState/${v1()}`,
     default: {}
 });
 
 export const tempUserState = atom({
-    key: 'tempUserState',
+    key: `tempUserState/${v1()}`,
     default: {}
 });
 
 export const tempUsersState = atom({
-    key: 'tempUsersState',
+    key: `tempUsersState/${v1()}`,
     default: []
 });
 
 export const modalVisibleState = atom({
-    key: 'modalVisibleState',
+    key: `modalVisibleState/${v1()}`,
     default: {
         params: null,
         isVisivle: false
@@ -28,7 +29,7 @@ export const modalVisibleState = atom({
 // https://jsonplaceholder.typicode.com/users
 
 export const tempUser = selectorFamily({
-    key: 'jsonuser/get',
+    key: `jsonuser/get/${v1()}`,
     get: (userId: number) => async () => {
         if (!userId) return '';
 
@@ -38,10 +39,10 @@ export const tempUser = selectorFamily({
 });
 
 export const tempUsersSelector = selector({
-    key: 'jsonusers/get',
+    key: `jsonusers/get/${v1()}`,
     get: async () => {
-        const {data} = await axios.get(`https://jsonplaceholder.typicode.com/users`);
-        return data;
+        const {body} = await getJsonUserList();
+        return body;
     },
     set: ({set}, newValue: any) => {
         set(tempUsersState, newValue);

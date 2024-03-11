@@ -6,9 +6,9 @@ import PageRouter from './route';
 function App() {
     const [envInfo, setEnvInfo] = useRecoilState(envState);
 
-    const tempUserLoaderble = useRecoilValueLoadable(tempUsersSelector);
+    const tempUsersLoaderble = useRecoilValueLoadable(tempUsersSelector);
 
-    console.log('envInfo : ', setEnvInfo, envInfo, tempUserLoaderble.state, tempUserLoaderble.contents);
+    console.log('envInfo : ', setEnvInfo, envInfo, tempUsersLoaderble.state, tempUsersLoaderble.contents);
     return (
         <div className="app">
             <main>
