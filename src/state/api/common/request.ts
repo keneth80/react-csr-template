@@ -6,7 +6,8 @@ export interface GatewayRequestParam<T> {
 
 export interface GatewayRequest<T> {
     url: string;
-    body?: T | AxiosRequestConfig;
+    body?: T;
+    config?: AxiosRequestConfig;
 }
 
 export const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {

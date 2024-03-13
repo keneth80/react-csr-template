@@ -3,14 +3,10 @@ import {AxiosSingleInstance} from '../common/http';
 import {GatewayResponse} from './response';
 import {GatewayRequest} from './request';
 
-function httpMethodWrapper<T = any, P = any>(
-    url: string,
-    param: P,
-    httpMethod: (url: string, param: P | AxiosRequestConfig) => Promise<AxiosResponse<T>>
-) {
+function httpMethodWrapper<T = any>(httpMethod: (...args: any[]) => Promise<AxiosResponse<T>>, ...args: any[]) {
     return new Promise<GatewayResponse<T>>((resolve) => {
         try {
-            httpMethod(url, param)
+            httpMethod(...args)
                 .then((response: AxiosResponse) => {
                     resolve(response.data);
                 })
@@ -35,18 +31,18 @@ function httpMethodWrapper<T = any, P = any>(
     });
 }
 
-export function get<T = any, P = any>({url, body}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
-    return httpMethodWrapper<T, AxiosRequestConfig>(url, body ? (body as AxiosRequestConfig) : {}, AxiosSingleInstance.getInstance().get);
+export function get<T = any, P = any>({url, config}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
+    return httpMethodWrapper<T>(AxiosSingleInstance.getInstance().get, url, config ? (config as AxiosRequestConfig) : {});
 }
 
-export function post<T = any, P = any>({url, body}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
-    return httpMethodWrapper<T, P>(url, body as P, AxiosSingleInstance.getInstance().post);
+export function post<T = any, P = any>({url, body, config}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
+    return httpMethodWrapper<T>(AxiosSingleInstance.getInstance().post, url, body as P, config);
 }
 
-export function put<T = any, P = any>({url, body}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
-    return httpMethodWrapper<T, P>(url, body as P, AxiosSingleInstance.getInstance().put);
+export function put<T = any, P = any>({url, body, config}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
+    return httpMethodWrapper<T>(AxiosSingleInstance.getInstance().put, url, body as P, config);
 }
 
-export function deleted<T = any, P = any>({url, body}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
-    return httpMethodWrapper<T, AxiosRequestConfig>(url, body ? (body as AxiosRequestConfig) : {}, AxiosSingleInstance.getInstance().delete);
+export function deleted<T = any, P = any>({url, config}: GatewayRequest<P>): Promise<GatewayResponse<T>> {
+    return httpMethodWrapper<T>(AxiosSingleInstance.getInstance().delete, url, config ? (config as AxiosRequestConfig) : {});
 }
