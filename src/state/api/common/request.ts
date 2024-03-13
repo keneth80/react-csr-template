@@ -1,8 +1,12 @@
-import {InternalAxiosRequestConfig} from 'axios';
+import {InternalAxiosRequestConfig, AxiosRequestConfig} from 'axios';
+
+export interface GatewayRequestParam<T> {
+    param: T;
+}
 
 export interface GatewayRequest<T> {
     url: string;
-    param: T;
+    body?: T | AxiosRequestConfig;
 }
 
 export const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {

@@ -2,6 +2,7 @@ import {Suspense, lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import MainLayout from '../layout/MainLayout';
 import EmptyLayout from '../layout/EmpltyLayout';
+import LoadingBar from '../componenets/common/LoadingBar';
 
 export interface RouteItem {
     id: number;
@@ -29,28 +30,28 @@ export const routeList: Array<RouteItem> = [
         id: 0,
         routeName: 'Home',
         isIndex: true,
-        fallback: <>Home Loading...</>,
+        fallback: <LoadingBar />,
         element: <Home />
     },
     {
         id: 1,
         routeName: 'About',
         path: '/about',
-        fallback: <>About Loading...</>,
+        fallback: <LoadingBar />,
         element: <About />
     },
     {
         id: 4,
         routeName: 'Dashboard',
         path: '/dashboard',
-        fallback: <>Dashboard Loading...</>,
+        fallback: <LoadingBar />,
         element: <Dashboard />
     },
     {
         id: 4,
         routeName: 'Step Example',
         path: '/step',
-        fallback: <>Step Layout Loading...</>,
+        fallback: <LoadingBar />,
         element: <StepLayout />
     }
 ];
@@ -59,13 +60,13 @@ const emptyRouteList: Array<RouteItem> = [
     {
         id: 2,
         path: '/login',
-        fallback: <>Loading...</>,
+        fallback: <LoadingBar />,
         element: <SignIn />
     },
     {
         id: 3,
         path: '*',
-        fallback: <>Loading...</>,
+        fallback: <LoadingBar />,
         element: <NotFound />
     }
 ];

@@ -3,7 +3,7 @@ import {AxiosResponse} from 'axios';
 export interface GatewayResponse<T> {
     statusCode: number;
     resultCode: number;
-    body: T;
+    body: T | string;
 }
 
 export const onResponse = (res: AxiosResponse): AxiosResponse => {

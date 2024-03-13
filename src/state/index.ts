@@ -1,6 +1,5 @@
 import {atom, selector, selectorFamily} from 'recoil';
 import {v1} from 'uuid';
-import axios from 'axios';
 import {getJsonUserById, getJsonUserList} from './api/endpoint/jsonusers';
 
 export const envState = atom({
@@ -33,7 +32,7 @@ export const tempUser = selectorFamily({
     get: (userId: number) => async () => {
         if (!userId) return '';
 
-        const {body} = await getJsonUserById({userId});
+        const {body} = await getJsonUserById({param: {userId}});
         return body;
     }
 });
