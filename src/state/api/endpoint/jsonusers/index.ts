@@ -12,5 +12,5 @@ export function getJsonUserList(): Promise<GatewayResponse<Array<JsonUserRespons
 
 export function getJsonUserById({param}: GatewayRequestParam<JsonUserRequest>): Promise<GatewayResponse<JsonUserResponse>> {
     const {userId} = param;
-    return get<JsonUserResponse>({url: prefix + `/users/${userId}`});
+    return get<JsonUserResponse, JsonUserRequest>({url: prefix + `/users/${userId}`});
 }
