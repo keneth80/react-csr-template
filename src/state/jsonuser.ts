@@ -58,8 +58,7 @@ export const updateUser = selectorFamily<string | JsonPostResponse, Param>({
 const userListSelector = selector<JsonUserResponse[]>({
     key: `userListSelector/${v1()}`,
     get: async ({get}) => {
-        const list = get(userListState);
-        console.log('getUserList : ', list);
+        get(userListState);
         const {body} = await getJsonUserList();
         return body as JsonUserResponse[];
     },

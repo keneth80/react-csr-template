@@ -106,6 +106,16 @@ export default function About() {
                                     Dollar update
                                 </Button>
                             </Box>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    gap: 2
+                                }}
+                            >
+                                {users.length}
+                            </Box>
                         </div>
                     </Paper>
                 </Grid>
