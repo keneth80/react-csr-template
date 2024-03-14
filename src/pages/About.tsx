@@ -1,11 +1,12 @@
 import {useState, useEffect, useCallback} from 'react';
-import {useRecoilValue, useRecoilRefresher_UNSTABLE, useSetRecoilState, useRecoilState} from 'recoil';
-import {getUser, updateUser} from '../state';
+import {useRecoilValue, useRecoilRefresher_UNSTABLE} from 'recoil';
+import useJsonUserList, {getUser, updateUser} from '../state/jsonuser';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import useRealTimeDollar from '../state/doller';
+import {Box} from '@mui/material';
 
 export default function About() {
     const [text, setText] = useState('');
@@ -23,6 +24,8 @@ export default function About() {
 
     const {dollar, setDollar} = useRealTimeDollar();
 
+    const {users, updateUserData} = useJsonUserList();
+
     // 캐싱처리되는 데이터를 다시 받아오기 위함.
     const refresh = useRecoilRefresher_UNSTABLE(getUser(1));
 
@@ -34,13 +37,13 @@ export default function About() {
         setUserId(userId + 1);
     }, [setUserId]);
 
-    const updateUserData = useCallback(() => {
-        setUpdate({
+    const updateUserDataHandler = useCallback(() => {
+        updateUserData({
             title: 'kenneth',
             body: 'kenneth body',
             userId: '2'
         });
-    }, [setUpdate]);
+    }, [updateUserData]);
 
     useEffect(() => {
         setText(dollar + '');
@@ -58,7 +61,11 @@ export default function About() {
         console.log('update : ', update);
     }, [update]);
 
-    console.log('updateObj : ', updateObj);
+    useEffect(() => {
+        console.log('useEffect.users : ', users);
+    }, [users]);
+
+    console.log('users : ', users);
 
     return (
         <Container maxWidth="xl" sx={{pt: 4, pb: 4, pr: 4, pl: 4, width: '100%'}}>
@@ -81,15 +88,24 @@ export default function About() {
                             </Button>
                             <p>{JSON.stringify(userObj)}</p>
                             <div>{text}</div>
-                            <Button variant="contained" onClick={() => changeUser()}>
-                                change User
-                            </Button>
-                            <Button variant="contained" onClick={() => updateUserData()}>
-                                update User
-                            </Button>
-                            <Button variant="contained" onClick={() => dollarRefresh()}>
-                                Dollar update
-                            </Button>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    gap: 2
+                                }}
+                            >
+                                <Button variant="contained" onClick={() => changeUser()}>
+                                    change User
+                                </Button>
+                                <Button variant="contained" onClick={() => updateUserDataHandler()}>
+                                    update User
+                                </Button>
+                                <Button variant="contained" onClick={() => dollarRefresh()}>
+                                    Dollar update
+                                </Button>
+                            </Box>
                         </div>
                     </Paper>
                 </Grid>
