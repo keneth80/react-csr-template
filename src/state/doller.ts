@@ -14,11 +14,9 @@ const realTimeDollarState = selector({
         const res = await fetch('https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRWUSD');
         const result = await res.json();
         const exchangeRate = parseFloat(result[0].basePrice);
-        console.log('realTimeDollarState : ', won, exchangeRate);
         return won / exchangeRate;
     },
     set: ({set}, exChangedWon) => {
-        console.log('realTimeDollarState.set : ', exChangedWon);
         set(wonState, exChangedWon);
     }
 });
@@ -30,12 +28,10 @@ const useRealTimeDollar = () => {
 
     useEffect(() => {
         if (loadable.state === 'hasValue') {
-            console.log('const won = get(wonState); : ', won);
             setRecoilState(loadable.contents);
         } else if (loadable.state === 'hasError') {
             console.log(loadable.contents);
         }
-        console.log('useRealTimeDollar : ', loadable);
     }, [loadable]);
 
     const setDollar = async (inputDollar: number) => {
@@ -43,7 +39,6 @@ const useRealTimeDollar = () => {
         const result = await res.json();
         const exchangeRate = parseFloat(result[0].basePrice);
         const exchangedWon = exchangeRate * inputDollar;
-        console.log('exchangedWon : ', exchangeRate, inputDollar, exchangedWon);
         setRealTimeDollar(exchangedWon);
     };
 
