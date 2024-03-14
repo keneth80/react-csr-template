@@ -1,14 +1,14 @@
 import {useRecoilState, useRecoilValueLoadable} from 'recoil';
-import {envState, tempUsersSelector} from './state';
+import {envState, getUserList} from './state';
 import './App.css';
 import PageRouter from './route';
 
 function App() {
     const [envInfo, setEnvInfo] = useRecoilState(envState);
 
-    const tempUsersLoaderble = useRecoilValueLoadable(tempUsersSelector);
+    const userListLoaderble = useRecoilValueLoadable(getUserList);
 
-    console.log('envInfo : ', setEnvInfo, envInfo, tempUsersLoaderble.state, tempUsersLoaderble.contents);
+    console.log('envInfo : ', setEnvInfo, envInfo, userListLoaderble.state, userListLoaderble.contents);
     return (
         <div className="app">
             <main>

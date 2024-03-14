@@ -1,27 +1,64 @@
-import {useState, useEffect} from 'react';
-import {useRecoilValue, useRecoilRefresher_UNSTABLE} from 'recoil';
-import {tempUser} from '../state';
+import {useState, useEffect, useCallback} from 'react';
+import {useRecoilValue, useRecoilRefresher_UNSTABLE, useSetRecoilState, useRecoilState} from 'recoil';
+import {getUser, updateUser} from '../state';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import useRealTimeDollar from '../state/doller';
 
 export default function About() {
-    const [user, setUser] = useState<any>(null);
+    const [text, setText] = useState('');
+    const [userId, setUserId] = useState(0);
+    const [update, setUpdate] = useState({
+        title: '',
+        body: '',
+        userId: ''
+    });
     // temp user
-    const userObj = useRecoilValue(tempUser(2));
+    const userObj = useRecoilValue(getUser(userId));
+
+    // update user
+    const updateObj = useRecoilValue(updateUser(update));
+
+    const {dollar, setDollar} = useRealTimeDollar();
 
     // 캐싱처리되는 데이터를 다시 받아오기 위함.
-    const refresh = useRecoilRefresher_UNSTABLE(tempUser(2));
+    const refresh = useRecoilRefresher_UNSTABLE(getUser(1));
+
+    const dollarRefresh = useCallback(() => {
+        setDollar(dollar + 10);
+    }, [setDollar]);
+
+    const changeUser = useCallback(() => {
+        setUserId(userId + 1);
+    }, [setUserId]);
+
+    const updateUserData = useCallback(() => {
+        setUpdate({
+            title: 'kenneth',
+            body: 'kenneth body',
+            userId: '2'
+        });
+    }, [setUpdate]);
 
     useEffect(() => {
-        if (!user) {
-            setUser(userObj);
-            console.log('set user');
-        }
-    }, [user, userObj]);
+        setText(dollar + '');
+    }, [dollar]);
 
-    console.log('userObj : ', userObj);
+    useEffect(() => {
+        if (update.userId) {
+            setUserId(+update.userId);
+            setUpdate({
+                title: '',
+                body: '',
+                userId: ''
+            });
+        }
+        console.log('update : ', update);
+    }, [update]);
+
+    console.log('updateObj : ', updateObj);
 
     return (
         <Container maxWidth="xl" sx={{pt: 4, pb: 4, pr: 4, pl: 4, width: '100%'}}>
@@ -41,6 +78,17 @@ export default function About() {
                             <p>About 프로젝트입니다.</p>
                             <Button variant="contained" onClick={() => refresh()}>
                                 Refresh
+                            </Button>
+                            <p>{JSON.stringify(userObj)}</p>
+                            <div>{text}</div>
+                            <Button variant="contained" onClick={() => changeUser()}>
+                                change User
+                            </Button>
+                            <Button variant="contained" onClick={() => updateUserData()}>
+                                update User
+                            </Button>
+                            <Button variant="contained" onClick={() => dollarRefresh()}>
+                                Dollar update
                             </Button>
                         </div>
                     </Paper>

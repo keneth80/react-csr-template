@@ -21,3 +21,10 @@ export interface JsonUserResponse {
         bs: string;
     };
 }
+
+export interface JsonPostResponse {
+    title: string;
+    body: string;
+    userId: number;
+    id: number;
+}
