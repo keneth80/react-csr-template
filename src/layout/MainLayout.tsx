@@ -15,9 +15,11 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {mainListItems, secondaryListItems} from './listItems';
 import {useRouteName} from '../hooks';
 import {RouteItem} from '../route';
+import {useAuth} from '../hooks/auth/useAuth';
 
 function Copyright(props: any) {
     return (
@@ -87,9 +89,14 @@ function MainLayout() {
     const location: RouteItem | undefined = useRouteName();
     console.log('location : ', location);
     const [open, setOpen] = useState(true);
+    const {logout} = useAuth();
 
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+
+    const onLogoutHandler = () => {
+        logout();
     };
 
     return (
@@ -121,6 +128,9 @@ function MainLayout() {
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
+                        </IconButton>
+                        <IconButton onClick={onLogoutHandler}>
+                            <LogoutIcon sx={{color: '#fff'}} />
                         </IconButton>
                     </Toolbar>
                 </AppBar>

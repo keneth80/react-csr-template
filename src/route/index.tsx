@@ -87,33 +87,35 @@ const emptyRouteList: Array<RouteItem> = [
 
 function PageRouter() {
     return (
-        <Routes>
-            <Route element={<MainLayout />}>
-                {routeList.map((route: RouteItem) => {
-                    return (
-                        <Route
-                            key={route.id}
-                            index={route.isIndex ? true : false}
-                            path={route.path ? route.path : undefined}
-                            element={<Suspense fallback={route.fallback}>{route.element}</Suspense>}
-                        />
-                    );
-                })}
-            </Route>
-            <Route element={<EmptyLayout />}>
-                <Route path="/verify-2fa" element={<Verify2FA />} />
-                {emptyRouteList.map((route: RouteItem) => {
-                    return (
-                        <Route
-                            key={route.id}
-                            index={route.isIndex ? true : false}
-                            path={route.path ? route.path : undefined}
-                            element={<Suspense fallback={route.fallback}>{route.element}</Suspense>}
-                        />
-                    );
-                })}
-            </Route>
-        </Routes>
+        <AuthProvider>
+            <Routes>
+                <Route element={<MainLayout />}>
+                    {routeList.map((route: RouteItem) => {
+                        return (
+                            <Route
+                                key={route.id}
+                                index={route.isIndex ? true : false}
+                                path={route.path ? route.path : undefined}
+                                element={<Suspense fallback={route.fallback}>{route.element}</Suspense>}
+                            />
+                        );
+                    })}
+                </Route>
+                <Route element={<EmptyLayout />}>
+                    <Route path="/verify-2fa" element={<Verify2FA />} />
+                    {emptyRouteList.map((route: RouteItem) => {
+                        return (
+                            <Route
+                                key={route.id}
+                                index={route.isIndex ? true : false}
+                                path={route.path ? route.path : undefined}
+                                element={<Suspense fallback={route.fallback}>{route.element}</Suspense>}
+                            />
+                        );
+                    })}
+                </Route>
+            </Routes>
+        </AuthProvider>
     );
 }
 

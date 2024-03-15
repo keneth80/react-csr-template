@@ -19,7 +19,7 @@ export const AuthProvider = ({children}: AuthProviderParam) => {
 
     const login = async (data: any) => {
         setUser(data);
-
+        console.log('login start : ', data);
         // Navigate to 2FA verification page
         navigate('/verify-2fa');
     };
@@ -27,14 +27,14 @@ export const AuthProvider = ({children}: AuthProviderParam) => {
     const logout = () => {
         setUser(null);
         setIs2FAVerified(false);
-        navigate('/', {replace: true});
+        navigate('/login', {replace: true});
     };
 
     const verify2FACode = async (code: string) => {
         // Mock verification logic
         if (code === '0000') {
             setIs2FAVerified(true);
-            navigate('/secret'); // Navigate to a protected route after successful 2FA
+            navigate('/dashboard'); // Navigate to a protected route after successful 2FA
             return true;
         }
         return false;
@@ -47,6 +47,8 @@ export const AuthProvider = ({children}: AuthProviderParam) => {
         logout,
         verify2FACode
     };
+
+    console.log('AuthProvider : ', AuthContext, value);
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
