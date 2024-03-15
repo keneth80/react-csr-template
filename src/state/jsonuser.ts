@@ -21,11 +21,9 @@ interface Param extends JsonPostRequest {
 }
 
 function userMapper(value: JsonUserResponse) {
-    let returnValue: JsonUserResponse = {};
+    const returnValue: JsonUserResponse = {};
     try {
-        returnValue = {
-            ...value
-        };
+        Object.assign(returnValue, value);
     } catch (error) {
         console.log('[ERROR][userMapper]: ', error);
     }
