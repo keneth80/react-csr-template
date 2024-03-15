@@ -1,9 +1,9 @@
 export interface JsonUserResponse {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    address: {
+    id?: number;
+    name?: string;
+    username?: string;
+    email?: string;
+    address?: {
         street: string;
         suite: string;
         city: string;
@@ -13,9 +13,9 @@ export interface JsonUserResponse {
             lng: string;
         };
     };
-    phone: string;
-    website: string;
-    company: {
+    phone?: string;
+    website?: string;
+    company?: {
         name: string;
         catchPhrase: string;
         bs: string;

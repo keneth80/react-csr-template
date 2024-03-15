@@ -20,6 +20,26 @@ interface Param extends JsonPostRequest {
     [key: string]: any;
 }
 
+function userMapper(value: JsonUserResponse) {
+    let returnValue: JsonUserResponse = {};
+    try {
+        returnValue = {
+            ...value
+        };
+    } catch (error) {
+        console.log('[ERROR][userMapper]: ', error);
+    }
+    return returnValue;
+}
+
+function userListMapper(value: JsonUserResponse[]) {
+    const returnValue: JsonUserResponse[] = [];
+    for (let i = 0; i < value.length; i++) {
+        returnValue.push(userMapper(value[i] as JsonUserResponse));
+    }
+    return returnValue;
+}
+
 // https://jsonplaceholder.typicode.com/users
 
 export const getUser = selectorFamily({
@@ -35,23 +55,12 @@ export const getUser = selectorFamily({
 export const getUserList = selector({
     key: `jsonusers/get/${v1()}`,
     get: async ({get}) => {
-        const list = get(userListState);
-        console.log('getUserList : ', list);
+        get(userListState);
         const {body} = await getJsonUserList();
-        return body;
+        return userListMapper(body as JsonUserResponse[]);
     },
     set: ({set}, newValue: any) => {
         set(userListState, newValue);
-    }
-});
-
-export const updateUser = selectorFamily<string | JsonPostResponse, Param>({
-    key: `jsonuser/update/${v1()}`,
-    get: (user) => async () => {
-        if (!user.userId) return '';
-
-        const {body} = await addJsonPosts({param: user});
-        return body;
     }
 });
 
@@ -60,10 +69,9 @@ const userListSelector = selector<JsonUserResponse[]>({
     get: async ({get}) => {
         get(userListState);
         const {body} = await getJsonUserList();
-        return body as JsonUserResponse[];
+        return userListMapper(body as JsonUserResponse[]);
     },
     set: ({set}, changedList) => {
-        console.log('userListSelector.set :', userListState, changedList);
         set(userListState, changedList);
     }
 });
@@ -73,7 +81,6 @@ const useJsonUserList = () => {
     const [loadable, setUpdateUser] = useRecoilStateLoadable(userListSelector);
 
     useEffect(() => {
-        console.log('useJsonUserList.useEffect : ', loadable);
         if (loadable.state === 'hasValue') {
             setRecoilState(loadable.contents);
         } else if (loadable.state === 'hasError') {
@@ -81,17 +88,13 @@ const useJsonUserList = () => {
         }
     }, [loadable]);
 
-    console.log('useJsonUserList.loadable : ', loadable);
-
     const updateUserData = async (user: Param) => {
         if (!user.userId) return '';
 
         const {body} = await addJsonPosts({param: user});
-        console.log('resturn body : ', body);
         if ((body as JsonPostResponse).id) {
             const {body: list} = await getJsonUserList();
-            console.log('resturn list : ', list);
-            setUpdateUser(list as JsonUserResponse[]);
+            setUpdateUser(userListMapper(list as JsonUserResponse[]));
         }
     };
 

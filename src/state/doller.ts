@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {atom, selector, useRecoilStateLoadable, useRecoilValue} from 'recoil';
+import {atom, selector, useRecoilStateLoadable} from 'recoil';
 import {v1} from 'uuid';
 
 export const wonState = atom({
@@ -24,7 +24,6 @@ const realTimeDollarState = selector({
 const useRealTimeDollar = () => {
     const [dollar, setRecoilState] = useState(0);
     const [loadable, setRealTimeDollar] = useRecoilStateLoadable(realTimeDollarState);
-    const won = useRecoilValue(wonState);
 
     useEffect(() => {
         if (loadable.state === 'hasValue') {

@@ -58,6 +58,7 @@
         ]
     },
     "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@types/uuid": "^9.0.8",
         "cra-bundle-analyzer": "^0.1.1"
     },
