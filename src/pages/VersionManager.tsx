@@ -18,7 +18,7 @@ import MuiDialog from '../componenets/common/MuiDialog';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
-export default function Home() {
+export default function VersionManager() {
     const {openModal} = useToggleModal();
     const [open, setOpenDialog] = useState(false);
     const [selectedValue, setSelectedValue] = useState(emails[1]);

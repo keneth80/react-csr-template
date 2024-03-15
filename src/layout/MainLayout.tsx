@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {Outlet} from 'react-router-dom';
-import {useRecoilState} from 'recoil';
 import {styled, createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,8 +16,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {mainListItems, secondaryListItems} from './listItems';
-import {modalVisibleState} from '../state';
-import Modal from '../componenets/common/Modal';
 import {useRouteName} from '../hooks';
 import {RouteItem} from '../route';
 
@@ -95,14 +92,6 @@ function MainLayout() {
         setOpen(!open);
     };
 
-    const [modalVisible, setModalVisible] = useRecoilState(modalVisibleState);
-    const closeModal = () => {
-        setModalVisible({
-            isVisivle: false,
-            params: null
-        });
-    };
-
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{display: 'flex'}}>
@@ -169,7 +158,6 @@ function MainLayout() {
                     <Copyright sx={{pt: 4}} />
                 </Box>
             </Box>
-            <>{modalVisible && <Modal $visibled={modalVisible.isVisivle} closable={true} maskClosable={true} onClose={closeModal}></Modal>}</>
         </ThemeProvider>
     );
 }

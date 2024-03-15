@@ -3,6 +3,9 @@ import {Route, Routes} from 'react-router-dom';
 import MainLayout from '../layout/MainLayout';
 import EmptyLayout from '../layout/EmpltyLayout';
 import LoadingBar from '../componenets/common/LoadingBar';
+import ProtectedRoute from '../route/ProtectedRoute';
+import {AuthProvider} from '../hooks/auth/useAuth';
+import {Verify2FA} from '../pages/Verify2FA';
 
 export interface RouteItem {
     id: number;
@@ -21,6 +24,7 @@ const About = lazy(
         })
 );
 const SignIn = lazy(() => import('../pages/SignIn'));
+const SignUp = lazy(() => import('../pages/SignUp'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 const StepLayout = lazy(() => import('../pages/StepLayout'));
@@ -41,11 +45,15 @@ export const routeList: Array<RouteItem> = [
         element: <About />
     },
     {
-        id: 4,
+        id: 3,
         routeName: 'Dashboard',
         path: '/dashboard',
         fallback: <LoadingBar />,
-        element: <Dashboard />
+        element: (
+            <ProtectedRoute>
+                <Dashboard />
+            </ProtectedRoute>
+        )
     },
     {
         id: 4,
@@ -58,13 +66,19 @@ export const routeList: Array<RouteItem> = [
 
 const emptyRouteList: Array<RouteItem> = [
     {
-        id: 2,
+        id: 11,
         path: '/login',
         fallback: <LoadingBar />,
         element: <SignIn />
     },
     {
-        id: 3,
+        id: 12,
+        path: '/signup',
+        fallback: <LoadingBar />,
+        element: <SignUp />
+    },
+    {
+        id: 13,
         path: '*',
         fallback: <LoadingBar />,
         element: <NotFound />
@@ -87,6 +101,7 @@ function PageRouter() {
                 })}
             </Route>
             <Route element={<EmptyLayout />}>
+                <Route path="/verify-2fa" element={<Verify2FA />} />
                 {emptyRouteList.map((route: RouteItem) => {
                     return (
                         <Route

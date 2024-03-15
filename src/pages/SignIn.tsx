@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,18 +12,30 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {useAuth} from '../hooks/auth/useAuth';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const {login} = useAuth();
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
             email: data.get('email'),
             password: data.get('password')
         });
+
+        if (username === 'user' && password === 'password') {
+            // Replace with actual authentication logic
+            await login({username});
+        } else {
+            alert('Invalid username or password');
+        }
     };
 
     return (
