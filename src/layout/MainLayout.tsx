@@ -88,7 +88,7 @@ const defaultTheme = createTheme();
 function MainLayout() {
     const location: RouteItem | undefined = useRouteName();
     console.log('location : ', location);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const {logout} = useAuth();
 
     const toggleDrawer = () => {
