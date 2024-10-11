@@ -37,7 +37,13 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "start:dev": "env-cmd -f .env.development react-scripts start",
+        "start:qa": "env-cmd -f .env.qa react-scripts start",
+        "start:live": "env-cmd -f .env.production react-scripts start",
+        "build:dev": "env-cmd -f .env.development react-scripts build",
+        "build:qa": "env-cmd -f .env.qa react-scripts build",
+        "build:live": "env-cmd -f .env.production react-scripts build"
     },
     "eslintConfig": {
         "extends": [
@@ -68,5 +74,10 @@
     "peerDependencies": {
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
+    },
+    "lint-staged": {
+        "src/**/*.{js,jsx,ts,tsx}": [
+            "eslint --ext .tsx --ext .ts src/"
+        ]
     }
 }
